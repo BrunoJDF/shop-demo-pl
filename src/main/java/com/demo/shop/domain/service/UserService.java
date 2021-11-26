@@ -33,4 +33,8 @@ public class UserService {
         return repository.findByName(username);
     }
 
+    public Optional<UserDto> updateUser(long id, UserDto dto){
+        return repository.update(id, dto);
+    }
+
 }

@@ -9,4 +9,5 @@ public interface UserRepository {
     UserDto save(UserDto dto);
     Optional<UserDto> findById(long id);
     void delete(long id);
+    Optional<UserDto> update(long id, UserDto dto);
 }

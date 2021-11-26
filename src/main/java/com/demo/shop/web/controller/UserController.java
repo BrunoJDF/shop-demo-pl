@@ -39,4 +39,12 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(false);
     }
 
+    @PatchMapping("/{id}")
+    public ResponseEntity<UserDto> update(@PathVariable("id") long id, @RequestBody UserDto change){
+        return service.updateUser(id, change)
+                .map(ResponseEntity::ok)
+                .orElse(new ResponseEntity<>(HttpStatus.BAD_REQUEST));
+    }
+
+
 }

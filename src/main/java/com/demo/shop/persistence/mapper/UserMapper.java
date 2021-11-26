@@ -2,21 +2,18 @@ package com.demo.shop.persistence.mapper;
 
 import com.demo.shop.domain.dto.UserDto;
 import com.demo.shop.persistence.entity.User;
-import org.mapstruct.InheritInverseConfiguration;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.Mappings;
+import org.mapstruct.*;
 
 @Mapper(componentModel = "spring")
 public interface UserMapper {
-    @Mappings({
-            @Mapping(source = "id", target = "id"),
-            @Mapping(source = "name", target = "name"),
-            @Mapping(source = "password", target = "password"),
-            @Mapping(source = "role", target = "role"),
-    })
+
     UserDto toUserDto(User user);
 
-    @InheritInverseConfiguration
     User toUser(UserDto dto);
+
+    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    @Mappings({
+            @Mapping(target = "id", ignore = true)
+    })
+    void updateUserFromDto(UserDto dto, @MappingTarget User entity);
 }

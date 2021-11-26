@@ -5,10 +5,12 @@ import com.demo.shop.domain.repository.UserRepository;
 import com.demo.shop.persistence.crud.UserCrudRepository;
 import com.demo.shop.persistence.entity.User;
 import com.demo.shop.persistence.mapper.UserMapper;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
+@Slf4j
 @Repository
 public class UserRepositoryImpl implements UserRepository {
 
@@ -39,6 +41,15 @@ public class UserRepositoryImpl implements UserRepository {
     @Override
     public void delete(long id) {
         crudRepository.deleteById(id);
+    }
+
+    @Override
+    public Optional<UserDto> update(long id, UserDto dto) {
+        return crudRepository.findById(id).map(user -> {
+            mapper.updateUserFromDto(dto, user);
+            User changed = crudRepository.save(user);
+            return mapper.toUserDto(changed);
+        });
     }
 
 }
