@@ -8,5 +8,5 @@ public interface UserRepository {
     Optional<UserDto> findByName(String username);
     UserDto save(UserDto dto);
     Optional<UserDto> findById(long id);
-    UserDto delete(long id);
+    void delete(long id);
 }

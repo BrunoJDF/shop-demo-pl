@@ -22,8 +22,7 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public Optional<UserDto> findByName(String username) {
-        Optional<User> user = crudRepository.findByName(username);
-        return user.map(mapper::toUserDto);
+        return crudRepository.findByName(username).map(mapper::toUserDto);
     }
 
     @Override
@@ -34,12 +33,12 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public Optional<UserDto> findById(long id) {
-        return Optional.empty();
+        return crudRepository.findById(id).map(mapper::toUserDto);
     }
 
     @Override
-    public UserDto delete(long id) {
-        return null;
+    public void delete(long id) {
+        crudRepository.deleteById(id);
     }
 
 }
